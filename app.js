@@ -4,7 +4,7 @@ const mysql = require("mysql");
 const bodyParser = require("body-parser");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT  ||  3000;
 
 // Configuración de la conexión a la base de datos
 const pool = mysql.createPool({
@@ -73,6 +73,6 @@ app.post("/agregar", (req, res) => {
 });
 
 // Inicia el servidor
-app.listen(port, () => {
-  console.log(`Servidor web escuchando en http://localhost:${port}`);
-});
+app.listen(process.env.PORT  ||  3000)
+  console.log(`Servidor web escuchando en `, process.env.PORT  ||  3000);
+;
