@@ -1,0 +1,13 @@
+npm init --yes
+npm i express
+npm i nodemon - d
+modifico package.json asi
+	"scripts": {
+		"start": "nodemon app.js" Agrego esta linea y borro la de test
+
+arranco ahora con mpm run start
+
+
+Heroku 
+sortizdev@gmail.com
+@Esys991996

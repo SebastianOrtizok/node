@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Resultados de Consulta</title>
+
+  </head>
+  <body>
+    <h1>Resultados de la Consultaaaaa</h1>
+    <ul id="resultadosLista"></ul>
+<!-- ... (resto de tu HTML) ... -->
+
+<script>
+fetch("/sql_consultas")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+    }
+    return response.json();
+  })
+  .then(resultados => {
+    // Actualizar el contenido de la lista con los resultados de la consulta
+    const resultadosLista = document.getElementById("resultadosLista");
+    resultados.forEach((fila) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = JSON.stringify(fila);
+      resultadosLista.appendChild(listItem);
+    });
+  })
+  .catch(error => console.error("Error al obtener resultados:", error));
+
+</script>
+
+<!-- ... (resto de tu HTML) ... -->
+
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Resultados de Consulta</title>
+	</head>
+	<body>
+		<h2>Agregar Nuevo Nombre</h2>
+		<form
+			action="http://localhost:3000/agregar"
+			method="post"
+			enctype="application/x-www-form-urlencoded"
+		>
+			<label for="nombreNuevo">Nombre:</label>
+			<input type="text" id="nombreNuevo" name="nombreNuevo" required />
+			<label for="apellidoNuevo">Apellido:</label>
+			<input type="text" id="apellidoNuevo" name="apellidoNuevo" required />
+			<button type="submit">Agregar</button>
+		</form>
+	</body>
+</html>
