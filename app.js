@@ -35,6 +35,7 @@ const actualizarDatosSemanalmente = async () => {
 		const respuesta = await fetch(url, opciones);
 		const resultado = await respuesta.json();
 		const datosAPI = resultado.data;
+    console.log(datosAPI)
 
 		// Guardar los datos en la base de datos
 		datosAPI.forEach(async (dato) => {
