@@ -70,11 +70,6 @@ actualizarDatosSemanalmente()
 // Ejecutar la función cada semana (7 días * 24 horas * 60 minutos * 60 segundos * 1000 milisegundos)
 // setInterval(actualizarDatosSemanalmente, 7 * 24 * 60 * 60 * 1000);
 
-// Ruta para obtener datos de la API y guardarlos en la base de datos
-app.get("/obtenerDatosAPI", async (req, res) => {
-	// ... Tu código actual para esta ruta ...
-});
-
 // Rutas
 app.get("/index.html", (req, res) => {
 	res.sendFile(path.join(__dirname, "index.html"));
@@ -85,8 +80,24 @@ app.get("/insertar.html", (req, res) => {
 });
 
 // Ruta para realizar la consulta a la base de datos
-app.get("/sql_consultas", (req, res) => {
-	// ... Tu código actual para esta ruta ...
+app.get("/obtenerDatosAPI", async (req, res) => {
+  try {
+    // Consultar datos desde la base de datos
+    const consulta = "SELECT * FROM Ranking";
+    pool.query(consulta, (err, resultados, campos) => {
+      if (err) {
+        console.error("Error al consultar datos en la base de datos:", err);
+        res.status(500).json({ error: "Error interno del servidor" });
+      } else {
+        // Realizar cualquier otra operación que necesites con los resultados
+        // En este ejemplo, simplemente respondemos con los resultados
+        res.status(200).json(resultados);
+      }
+    });
+  } catch (error) {
+    console.error("Error al manejar la solicitud /obtenerDatosAPI:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
 });
 
 // Inicia el servidor
