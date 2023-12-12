@@ -35,7 +35,7 @@ const actualizarDatosSemanalmente = async () => {
 		const respuesta = await fetch(url, opciones);
 		const resultado = await respuesta.json();
 		const datosAPI = resultado.data;
-    console.log(datosAPI)
+    console.log(resultado)
 
 		// Guardar los datos en la base de datos
 		datosAPI.forEach(async (dato) => {
@@ -66,9 +66,9 @@ const actualizarDatosSemanalmente = async () => {
 		console.error("Error al obtener o procesar datos de la API:", error);
 	}
 };
-
+actualizarDatosSemanalmente()
 // Ejecutar la función cada semana (7 días * 24 horas * 60 minutos * 60 segundos * 1000 milisegundos)
-setInterval(actualizarDatosSemanalmente, 7 * 24 * 60 * 60 * 1000);
+// setInterval(actualizarDatosSemanalmente, 7 * 24 * 60 * 60 * 1000);
 
 // Ruta para obtener datos de la API y guardarlos en la base de datos
 app.get("/obtenerDatosAPI", async (req, res) => {
