@@ -35,24 +35,13 @@ const actualizarDatosSemanalmente = async () => {
 		const respuesta = await fetch(url, opciones);
 		const resultado = await respuesta.json();
 		const datosAPI = resultado.data;
-    console.log(resultado)
+		console.log(resultado);
 
 		// Guardar los datos en la base de datos
 		datosAPI.forEach(async (dato) => {
 			const query =
-				"INSERT INTO Ranking (Age, Championship_Points, Last_Match_Comment, Live_Points, Name, Next_Win_Points, Points, Points_Difference, Rank, Rank_Diff) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			const values = [
-				dato.Age,
-				dato.Championship_Points,
-				dato.Last_Match_Comment,
-				dato.Live_Points,
-				dato.Name,
-				dato.Next_Win_Points,
-				dato.Points,
-				dato.Points_Difference,
-				dato.Rank,
-				dato.Rank_Diff,
-			];
+				"INSERT INTO Ranking (Age, Name, Points, Rank) VALUES (?, ?, ?, ?)";
+			const values = [dato.Age, dato.Name, dato.Points, dato.Rank];
 
 			pool.query(query, values, (err, results, fields) => {
 				if (err) {
@@ -66,7 +55,7 @@ const actualizarDatosSemanalmente = async () => {
 		console.error("Error al obtener o procesar datos de la API:", error);
 	}
 };
-actualizarDatosSemanalmente()
+actualizarDatosSemanalmente();
 // Ejecutar la función cada semana (7 días * 24 horas * 60 minutos * 60 segundos * 1000 milisegundos)
 // setInterval(actualizarDatosSemanalmente, 7 * 24 * 60 * 60 * 1000);
 
@@ -80,24 +69,42 @@ app.get("/insertar.html", (req, res) => {
 });
 
 // Ruta para realizar la consulta a la base de datos
+app.get("/sql_consultas", (req, res) => {
+	// Realizar la consulta a la base de datos
+	const query = "SELECT * FROM Ranking";
+
+	pool.query(query, (err, results, fields) => {
+		if (err) {
+			console.error("Error al ejecutar la consulta:", err);
+			return res
+				.status(500)
+				.json({ error: "Error interno del servidor", details: err.message });
+		}
+
+		// Enviar los resultados como respuesta JSON
+		res.json(results);
+	});
+});
+
+// Ruta para realizar la consulta a la base de datos
 app.get("/obtenerDatosAPI", async (req, res) => {
-  try {
-    // Consultar datos desde la base de datos
-    const consulta = "SELECT * FROM Ranking";
-    pool.query(consulta, (err, resultados, campos) => {
-      if (err) {
-        console.error("Error al consultar datos en la base de datos:", err);
-        res.status(500).json({ error: "Error interno del servidor" });
-      } else {
-        // Realizar cualquier otra operación que necesites con los resultados
-        // En este ejemplo, simplemente respondemos con los resultados
-        res.status(200).json(resultados);
-      }
-    });
-  } catch (error) {
-    console.error("Error al manejar la solicitud /obtenerDatosAPI:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
+	try {
+		// Consultar datos desde la base de datos
+		const consulta = "SELECT * FROM Ranking";
+		pool.query(consulta, (err, resultados, campos) => {
+			if (err) {
+				console.error("Error al consultar datos en la base de datos:", err);
+				res.status(500).json({ error: "Error interno del servidor" });
+			} else {
+				// Realizar cualquier otra operación que necesites con los resultados
+				// En este ejemplo, simplemente respondemos con los resultados
+				res.status(200).json(resultados);
+			}
+		});
+	} catch (error) {
+		console.error("Error al manejar la solicitud /obtenerDatosAPI:", error);
+		res.status(500).json({ error: "Error interno del servidor" });
+	}
 });
 
 // Inicia el servidor
