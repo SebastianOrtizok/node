@@ -10,9 +10,9 @@ const port = process.env.PORT || 3000;
 const pool = mysql.createPool({
 	connectionLimit: 10,
 	host: "db4free.net",
-	user: "sortizdevok",
+	user: "sortiz",
 	password: "esys991996",
-	database: "impactotenis",
+	database: "impactotenisok",
 	timeout: 50000,
 });
 
@@ -34,7 +34,7 @@ const actualizarDatosSemanalmente = async () => {
 
 		const respuesta = await fetch(url, opciones);
 		const resultado = await respuesta.json();
-		const datosAPI = resultado.data;
+		const datosAPI = resultado.data.slice(0,10);
 		console.log(resultado);
 
 		// Guardar los datos en la base de datos
