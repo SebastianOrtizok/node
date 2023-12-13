@@ -13,6 +13,7 @@ const pool = mysql.createPool({
 	user: "sortizdevok",
 	password: "esys991996",
 	database: "impactotenis",
+	timeout: 50000,
 });
 
 // Middleware para parsear el cuerpo de las solicitudes en formato URL-encoded
