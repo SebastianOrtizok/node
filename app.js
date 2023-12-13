@@ -39,7 +39,7 @@ const actualizarDatosSemanalmente = async () => {
 		// Guardar los datos en la base de datos
 		datosAPI.forEach(async (dato) => {
 			const query =
-				"INSERT INTO Ranking (Age, Name, Points, Rank) VALUES (?, ?, ?, ?)";
+				"INSERT INTO Ranking (Age, Name, Points, RankingPosition) VALUES (?, ?, ?, ?)";
 			const values = [dato.Age, dato.Name, dato.Points, dato.Rank];
 
 			pool.query(query, values, (err, results, fields) => {
