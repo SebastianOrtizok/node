@@ -30,7 +30,7 @@ const actualizarDatosSemanalmente = async () => {
 		const opciones = {
 			method: "GET",
 			headers: {
-				"X-RapidAPI-Key": "f54b2a81dbmshbcc7d7a45a8cf74p1ab5c6jsn575020ac488a",
+				"X-RapidAPI-Key": "d25f974882msh93e69edd1b8b609p15c367jsn771a8f2f5a68",
 				"X-RapidAPI-Host": "ultimate-tennis1.p.rapidapi.com",
 			},
 		};
