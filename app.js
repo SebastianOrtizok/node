@@ -34,13 +34,13 @@ const actualizarDatosSemanalmente = async () => {
 
 		const respuesta = await fetch(url, opciones);
 		const resultado = await respuesta.json();
-		const datosAPI = resultado.data.slice(0,10);
+		const datosAPI = resultado.data.slice(0, 10);
 		console.log(resultado);
 
 		// Guardar los datos en la base de datos
 		datosAPI.forEach(async (dato) => {
 			const query =
-				"INSERT INTO Ranking (Age, Name, Points, RankingPosition) VALUES (?, ?, ?, ?)";
+				"UPDATE  INTO Ranking (Age, Name, Points, RankingPosition) VALUES (?, ?, ?, ?)";
 			const values = [dato.Age, dato.Name, dato.Points, dato.Rank];
 
 			pool.query(query, values, (err, results, fields) => {
@@ -55,9 +55,9 @@ const actualizarDatosSemanalmente = async () => {
 		console.error("Error al obtener o procesar datos de la API:", error);
 	}
 };
-actualizarDatosSemanalmente();
+// actualizarDatosSemanalmente();
 // Ejecutar la función cada semana (7 días * 24 horas * 60 minutos * 60 segundos * 1000 milisegundos)
-// setInterval(actualizarDatosSemanalmente, 7 * 24 * 60 * 60 * 1000);
+setInterval(actualizarDatosSemanalmente, 7 * 24 * 60 * 60 * 1000);
 
 // Rutas
 app.get("/index.html", (req, res) => {
@@ -96,8 +96,6 @@ app.get("/obtenerDatosAPI", async (req, res) => {
 				console.error("Error al consultar datos en la base de datos:", err);
 				res.status(500).json({ error: "Error interno del servidor" });
 			} else {
-				// Realizar cualquier otra operación que necesites con los resultados
-				// En este ejemplo, simplemente respondemos con los resultados
 				res.status(200).json(resultados);
 			}
 		});
