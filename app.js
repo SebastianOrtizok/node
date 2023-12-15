@@ -2,9 +2,12 @@ const express = require("express");
 const path = require("path");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors());
 
 // Configuración de la conexión a la base de datos
 const pool = mysql.createPool({
